@@ -5,6 +5,6 @@ router.get("/", (req, res) => {
   res.json({ msg: "welcome to dublin fox" });
 });
 
-router.use("/musics", musicRouter);
+router.use("/api/v1/musics", musicRouter);
 
 module.exports = router;
