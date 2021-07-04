@@ -15,10 +15,11 @@ module.exports = (sequelize, DataTypes) => {
     {
       username: {
         type: DataTypes.STRING,
+        unique: true,
         validate: {
           notEmpty: {
             args: true,
-            msg: "Username is required",
+            msg: "Username is required!",
           },
         },
       },
@@ -28,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           isEmail: {
             args: true,
-            msg: "Invalid email format",
+            msg: "Email format failed!",
           },
           notEmpty: {
             args: true,
