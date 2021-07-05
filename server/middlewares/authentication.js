@@ -19,6 +19,7 @@ const authentication = async (req, res, next) => {
     });
 
     if (!user) throw { msg: "Authentication failed!" };
+    req.userData = decoded;
     next();
   } catch (err) {
     console.log(err, "<== ERROR AUTHENTICATION");
