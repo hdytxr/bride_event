@@ -2,7 +2,7 @@ const { User } = require("../models");
 const { comparePass } = require("../helpers/bcrypt");
 const { generateToken } = require("../helpers/jwt");
 
-const register = async (req, res) => {
+const register = async (req, res, next) => {
   try {
     let { username, email, password } = req.body;
     const user = await User.create({
@@ -17,8 +17,9 @@ const register = async (req, res) => {
       msg: "register success ",
     });
   } catch (err) {
-    console.log(err, "<== error register");
-    res.status(500).json({ msg: "Internal server error" });
+    // console.log(err, "<== error register");
+    // res.status(500).json({ msg: "Internal server error" });
+    next(err);
   }
 };
 
