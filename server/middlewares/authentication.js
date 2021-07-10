@@ -18,12 +18,11 @@ const authentication = async (req, res, next) => {
       where: { email: decoded.email },
     });
 
-    if (!user) throw { msg: "Authentication failed!" };
+    if (!user) throw { name: "AuthenticationFailed!" };
     req.userData = decoded;
     next();
   } catch (err) {
-    console.log(err, "<== ERROR AUTHENTICATION");
-    res.status(500).json({ error: err.msg | "Internal server error!" });
+    next(err);
   }
 };
 

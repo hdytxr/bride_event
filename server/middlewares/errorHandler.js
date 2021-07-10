@@ -18,9 +18,15 @@ const errorHandler = (err, req, res, next) => {
       });
       statusCode = 400;
       break;
+    case "JsonWebTokenError":
+    case "AuthenticationFailed":
+      errors.push("Failed to authenticate!");
+      statusCode = 401;
+      break;
 
     default:
-      errors.push(err.msg);
+      errors.push(err.msg || "Internal server error");
+      statusCode = err.statusCode || 500;
   }
 
   res.status(statusCode).json({

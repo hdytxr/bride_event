@@ -10,15 +10,14 @@ const authorization = async (req, res, next) => {
     const music = await Music.findByPk(id);
 
     if (!music) {
-      throw { msg: "Music not found!" };
+      throw { msg: "Music not found!", statusCode: 404 };
     } else if (music.userId === req.userData.id) {
       next();
     } else {
-      throw { msg: "You're not authorize!" };
+      throw { name: "AuthenticationFailed!", statusCode: 401 };
     }
   } catch (err) {
-    console.log(err, "<== error authorization");
-    res.status(500).json({ error: err.msg || "Internal server error!" });
+    next(err);
   }
 };
 

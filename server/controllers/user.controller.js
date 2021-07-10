@@ -17,13 +17,11 @@ const register = async (req, res, next) => {
       msg: "register success ",
     });
   } catch (err) {
-    // console.log(err, "<== error register");
-    // res.status(500).json({ msg: "Internal server error" });
     next(err);
   }
 };
 
-const login = async (req, res) => {
+const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({
@@ -32,9 +30,10 @@ const login = async (req, res) => {
       },
     });
 
-    if (!user) throw { msg: "Invalid email or password" };
+    if (!user) throw { msg: "Invalid email or password", statusCode: 400 };
     let comparePassword = comparePass(password, user.password);
-    if (!comparePassword) throw { msg: "Invalid email or password" };
+    if (!comparePassword)
+      throw { msg: "Invalid email or password", statusCode: 400 };
 
     let payload = {
       id: user.id,
@@ -46,8 +45,7 @@ const login = async (req, res) => {
       token: token,
     });
   } catch (err) {
-    console.log(err, "<== error login");
-    res.status(500).json({ msg: "Invalid server error" });
+    next(err);
   }
 };
 

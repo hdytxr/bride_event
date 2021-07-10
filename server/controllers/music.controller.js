@@ -1,6 +1,6 @@
 const { Music } = require("../models");
 
-const findAll = async (req, res) => {
+const findAll = async (req, res, next) => {
   try {
     const musics = await Music.findAll({
       where: {
@@ -10,12 +10,12 @@ const findAll = async (req, res) => {
     res.status(200).json({
       data: musics,
     });
-  } catch (error) {
-    res.status(500).json({ msg: error });
+  } catch (err) {
+    next(err);
   }
 };
 
-const getById = async (req, res) => {
+const getById = async (req, res, next) => {
   try {
     const { id } = req.params;
     const music = await Music.findByPk(id);
@@ -26,11 +26,11 @@ const getById = async (req, res) => {
       data: music,
     });
   } catch (err) {
-    res.status(500).json({ err });
+    next(err);
   }
 };
 
-const create = async (req, res) => {
+const create = async (req, res, next) => {
   try {
     const { title, genre, artist } = req.body;
     const newMusic = await Music.create({
@@ -43,13 +43,12 @@ const create = async (req, res) => {
     res.status(201).json({
       newMusic,
     });
-  } catch (error) {
-    console.log(err, "<== error create");
-    res.status(500).json({ msg: err });
+  } catch (err) {
+    next(err);
   }
 };
 
-const destroy = async (req, res) => {
+const destroy = async (req, res, next) => {
   try {
     const { id } = req.params;
     const deleteMusic = await Music.findByPk(id);
@@ -58,12 +57,12 @@ const destroy = async (req, res) => {
 
     deleteMusic.destroy();
     res.status(200).json({ deletedMusic: deleteMusic });
-  } catch (error) {
-    res.status(500).json({ error });
+  } catch (err) {
+    next(err);
   }
 };
 
-const update = async (req, res) => {
+const update = async (req, res, next) => {
   try {
     const { id } = req.params;
     const { title, genre, artist } = req.body;
@@ -83,8 +82,7 @@ const update = async (req, res) => {
       artist: music.artist,
     });
   } catch (err) {
-    console.log(err, "<== error");
-    res.status(500).json({ err });
+    next(err);
   }
 };
 
