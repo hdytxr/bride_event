@@ -109,5 +109,5 @@ _Response (200)_
   {
     "success": true,
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJtZW1ldEBtYWlsLmNvbSIsImlhdCI6MTYyNjMxODQyMn0.oVtb-SFDG9zVo4w-MEmCFcrAaKmbj_o103KBS125CSE"
-}
+  }
 ```
